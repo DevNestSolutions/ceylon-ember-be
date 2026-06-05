@@ -1,0 +1,36 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id           String   @id @default(uuid())
+  username     String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+}
+
+model Dish {
+  id          String   @id @default(uuid())
+  name        String
+  price       String
+  tag         String
+  img         String
+  desc        String
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+}
+
+model Reservation {
+  id        String   @id @default(uuid())
+  name      String
+  email     String
+  date      String
+  guests    Int
+  status    String   @default("PENDING") // PENDING, CONFIRMED, CANCELLED
+  createdAt DateTime @default(now())
+}
